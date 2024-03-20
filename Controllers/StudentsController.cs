@@ -16,34 +16,16 @@ namespace StudentsApi.Controllers
         {
             _config = config;
         }
+      
 
-        [HttpGet(Name = "getstudents")]
-        public IActionResult  getstudents(string filterbyfirstname = "")
-        {
-            ApiResponse<IEnumerable<StudentApiModel>> response = new ApiResponse<IEnumerable<StudentApiModel>> { };
-            try
-            {
-                StudentsDal dal = new StudentsDal(_config);
-                response.Data = dal.GetStudents();
-            }
-            catch (Exception  e)
-            {
-                response.Success = false;
-                response.ErrorMessage = $"getstudents error: {e.Message}";
-            }
-
-            return Ok(response);
-                  
-        }
-
-        [HttpGet(Name = "GetStudentsAsync")]
-        public async Task<IActionResult> GetStudentsAsync()
+        [HttpGet(Name = "GetStudents")]
+        public IActionResult GetStudents(string filterByFirstName = "")
         {
             ApiResponse<IEnumerable<StudentApiModel>> response = new ApiResponse<IEnumerable<StudentApiModel>>();
             try
             {
                 StudentsDal dal = new StudentsDal(_config);
-                response.Data = await dal.GetStudentsAsync();
+                response.Data = dal.GetStudents();
             }
             catch (Exception e)
             {
@@ -52,7 +34,29 @@ namespace StudentsApi.Controllers
             }
 
             return Ok(response);
+                      
         }
+      
+
+
+
+        //[HttpGet(Name = "GetStudentsAsync")]
+        //public async Task<IActionResult> GetStudentsAsync()
+        //{
+        //    ApiResponse<IEnumerable<StudentApiModel>> response = new ApiResponse<IEnumerable<StudentApiModel>>();
+        //    try
+        //    {
+        //        StudentsDal dal = new StudentsDal(_config);
+        //        response.Data = dal.GetStudents();                               
+        //    }           
+        //    catch (Exception e)
+        //    {
+        //        response.Success = false;
+        //        response.ErrorMessage = $"GetStudents Error: {e.Message}";
+        //    }
+
+        //    return Ok(response);
+        //}
 
     }
 }
